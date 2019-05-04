@@ -17,6 +17,7 @@
     <v-content>
       <v-layout style="background: rgba(0,0,0,0.8);">
         <Grid/>
+        <!-- <HelloWorld/> -->
       </v-layout>
     </v-content>
     
@@ -25,11 +26,12 @@
 
 <script>
 import Grid from './components/Grid.vue';
-
+import HelloWorld from './components/HelloWorld.vue'
 export default {
   name: 'App',
   components: {
-    Grid
+    Grid,
+    HelloWorld
   },
   data () {
     return {
