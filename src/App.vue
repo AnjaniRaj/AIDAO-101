@@ -26,12 +26,11 @@
 
 <script>
 import Grid from './components/Grid.vue';
-import HelloWorld from './components/HelloWorld.vue'
+
 export default {
   name: 'App',
   components: {
-    Grid,
-    HelloWorld
+    Grid
   },
   data () {
     return {
