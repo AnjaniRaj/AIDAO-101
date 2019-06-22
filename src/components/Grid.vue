@@ -1,6 +1,6 @@
 <template>
   <v-container fluid v-bind="{ [`grid-list-${size}`]: true }" >
-
+  <!-- fluid =fill page -->
     <v-layout row wrap>
             <v-dialog v-model="dialog" max-width = "500" persistent>
             
