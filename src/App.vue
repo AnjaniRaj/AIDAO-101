@@ -1,10 +1,14 @@
 <template>
-  <v-app>
-    <v-toolbar app class="nav-bar">
+  <div id="app">
+        <v-toolbar app class="nav-bar">
       <v-toolbar-title class="title">
         <span class="title">LEONARDO</span>
+        <div id="nav">
+          <router-link to="/">Home</router-link> |
+          <router-link to="/about">About</router-link>
+        </div>
       </v-toolbar-title>
- 
+  
       <!-- <v-btn
         flat
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
@@ -13,32 +17,10 @@
         <span class="mr-2">Latest Release</span>
       </v-btn> -->
     </v-toolbar>
-
-    <v-content>
-      <v-layout style="background: rgba(0,0,0,0.8);">
-        <Grid/>
-        <!-- <HelloWorld/> -->
-      </v-layout>
-    </v-content>
     
-  </v-app>
+    <router-view/>
+  </div>
 </template>
-
-<script>
-import Grid from './components/Grid.vue';
-
-export default {
-  name: 'App',
-  components: {
-    Grid
-  },
-  data () {
-    return {
-      //
-    }
-  }
-}
-</script>
 
 <style scoped>
   .nav-bar{
