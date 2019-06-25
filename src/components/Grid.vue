@@ -362,6 +362,7 @@
         },
          ]   }),
 
+    
     methods: {
       onBuyClicked: function(id) {
         // this.dialog = false;

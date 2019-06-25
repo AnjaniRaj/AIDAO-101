@@ -12,9 +12,23 @@
 
 <script>
 import Grid from '../components/Grid.vue';
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   name: 'Home',
+  methods: {
+    // ...mapActions(['registerWeb3'])
+  },
+  beforeCreate () {
+      console.log('registerWeb3 Action dispatched from home.vue');
+      this.$store.dispatch('registerWeb3')
+      // this.registerWeb3();
+    },
+  computed:{
+    web3(){
+      return this.$store.state.web3;
+    }
+  },
   components: {
     Grid
   },
