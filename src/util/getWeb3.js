@@ -43,7 +43,7 @@ let getWeb3 = new Promise(function (resolve, reject) {
   })
   .then(result => {
     return new Promise(function (resolve, reject) {
-      // Retrieve coinbase
+      // Retrieve accounts
       result.web3().eth.getAccounts((err, accounts) => {
         if (err) {
           reject(new Error('Unable to retrieve accounts'))
@@ -58,8 +58,21 @@ let getWeb3 = new Promise(function (resolve, reject) {
   })
   .then(result => {
     return new Promise(function (resolve, reject) {
+      // Retrieve coinbase
+      result.web3().eth.getCoinbase((err, coinbase) => {
+        if (err) {
+          reject(new Error('Unable to retrieve coinbase'))
+        } else {
+          result = Object.assign({}, result, { coinbase })
+          resolve(result)
+        }
+      })
+    })
+  })
+  .then(result => {
+    return new Promise(function (resolve, reject) {
       // Retrieve balance for coinbase
-      result.web3().eth.getBalance(result.account, (err, balance) => {
+      result.web3().eth.getBalance(result.coinbase, (err, balance) => {
         if (err) {
           reject(new Error('Unable to retrieve balance for address: ' + result.coinbase))
         } else {

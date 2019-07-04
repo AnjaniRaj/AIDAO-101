@@ -72,8 +72,9 @@
 </style>
 
 <script>
-
+  import web3 from 'web3';
   export default {
+
 
     data: () => ({
      bought_ids : Array(),
@@ -367,6 +368,31 @@
       onBuyClicked: function(id) {
         // this.dialog = false;
          this.progress = true;
+         console.log(this.image_data[this.currIdx].price)
+         const transactionParameters = {
+            nonce: '0x00', // ignored by MetaMask
+            gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
+            gas: '0x76c0',  // customizable by user during MetaMask confirmation.
+            to: '0xC715EF81e7aDAec9E89DA409A81977c6dCc35E55', // Required except during contract publications.
+            from: this.$store.getters.getAccount, // must match user's active address.
+            value: '0x00', // Only required to send ether to the recipient from the initiating external account.
+            data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057', // Optional, but used for defining smart contract creation and interaction.
+            chainId: 3 // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
+          }
+
+          ethereum.sendAsync({
+            method: 'eth_sendTransaction',
+            params: [transactionParameters],
+            from: this.$store.getters.getAccount,
+          }, function(err,res){
+            if(err){
+              //if err coded is -32603, show "please accept the transaction, try again"
+              cosole.log("error is ", err);
+            }else{
+              console.log("yeyeyeyeyye ", res);
+            }
+          })
+          console.log('transaction sent');
         setTimeout(() => {
           this.currIdx=-1;
           this.dialog = false;

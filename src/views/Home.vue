@@ -2,6 +2,12 @@
   <v-app>
     <v-content>
       <v-layout style="background: rgba(0,0,0,0.8);">
+        <!-- <div>
+          <p>Metamask: {{ web3.isInjected }}</p>
+          <p>Network: {{ web3.networkId }}</p>
+          <p>Account: {{ web3.coinbase }}</p>
+          <p>Balance: {{ web3.balance }}</p>
+        </div> -->
         <Grid/>
         <!-- <HelloWorld/> -->
       </v-layout>

@@ -3,6 +3,7 @@ import Vue from 'vue';
 import { VSlideXReverseTransition } from 'vuetify/lib';
 import state from './state';
 import getWeb3 from '../util/getWeb3';
+import pollWeb3 from '../util/pollWeb3';
 
 //Load Vuex
 Vue.use(Vuex);
@@ -22,7 +23,13 @@ export default new Vuex.Store({
             web3Copy.isInjected = result.injectedWeb3
             web3Copy.web3Instance = result.web3
             state.web3 = web3Copy
-            }
+            pollWeb3();
+            },
+        pollWeb3Instance(state,payload){
+            console.log('pollWeb3Instance mutation being executed', payload)
+            state.web3.coinbase = payload.coinbase
+            state.web3.balance = parseInt(payload.balance, 10)
+        }
     },
     actions:{
         registerWeb3 ({commit}) {
@@ -33,7 +40,16 @@ export default new Vuex.Store({
             }).catch(e => {
               console.log('error in action registerWeb3', e)
             })
-          }
+          },
+        pollWeb3({commit},payload){
+          console.log('pollWeb3 action being executed');
+          commit('pollWeb3Instance',payload);
+        }
+    },
+    getters:{
+        getAccount:function(state){
+          return state.web3.coinbase;
+        }
     }
     
 })
