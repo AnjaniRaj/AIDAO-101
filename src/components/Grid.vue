@@ -19,7 +19,7 @@
            </v-dialog>
 
            
-      <v-flex v-for="(img,idx) in image_data" :key="idx" xs3 style="padding: 8px;">
+      <v-flex v-for="(img,idx) in image_data" :key="idx" xs3 style="padding: 8px;"> 
         
         <v-hover>
           <v-card tile slot-scope="{ hover }">            
@@ -362,9 +362,15 @@
           isLoading:false
         },
          ]   }),
-
+    
+    
+    
+    
+    
+    
     
     methods: {
+
       onBuyClicked: function(id) {
         // this.dialog = false;
          this.progress = true;
@@ -373,13 +379,16 @@
          const transactionParameters = {
             nonce: '0x00', // ignored by MetaMask
             gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
-            gas: '0x76c0',  // customizable by user during MetaMask confirmation.
-            to: '0xC715EF81e7aDAec9E89DA409A81977c6dCc35E55', // Required except during contract publications.
+            gas: '0x76c0',  // customizable by user during MetaMask confirmation.            
+            to: '0x84305239e6577d11d4eb54bb0e6120187fbf5a81', // Required except during contract publications.
             from: this.$store.getters.getAccount, // must match user's active address.
             value: (this.image_data[this.currIdx].price*1000000000000000000).toString(16), // Only required to send ether to the recipient from the initiating external account.
             data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057', // Optional, but used for defining smart contract creation and interaction.
             chainId: 3 // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
           }
+
+          // have to use a variable coz 'this' is not accesible in async callback methods
+          var self = this;
 
           ethereum.sendAsync({
             method: 'eth_sendTransaction',
@@ -388,19 +397,29 @@
           }, function(err,res){
             if(err){
               //if err coded is -32603, show "please accept the transaction, try again"
-              cosole.log("error is ", err);
+              console.log("error is ", err);
             }else{
+
               console.log("yeyeyeyeyye ", res);
+
+              self.currIdx = -1;
+              self.dialog = false;
+              self.progress = false;
+
+              if(res.error !== undefined && res.error.code === -32603){
+                console.log("Rejected!");                
+                return
+              }
+
+              if(res.result!== null){
+                console.log("Image bought!");
+                self.image_data[id].isBought = true;
+              }
             }
           })
           console.log('transaction sent');
-        setTimeout(() => {
-          this.currIdx=-1;
-          this.dialog = false;
-          this.progress = false;
-          this.image_data[id].isBought = true;
 
-        }, 10000);
+          
         // alert(id);
       },
     },
