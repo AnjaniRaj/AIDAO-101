@@ -368,6 +368,7 @@
       onBuyClicked: function(id) {
         // this.dialog = false;
          this.progress = true;
+         
          console.log(this.image_data[this.currIdx].price)
          const transactionParameters = {
             nonce: '0x00', // ignored by MetaMask
@@ -375,7 +376,7 @@
             gas: '0x76c0',  // customizable by user during MetaMask confirmation.
             to: '0xC715EF81e7aDAec9E89DA409A81977c6dCc35E55', // Required except during contract publications.
             from: this.$store.getters.getAccount, // must match user's active address.
-            value: '0x00', // Only required to send ether to the recipient from the initiating external account.
+            value: (this.image_data[this.currIdx].price*1000000000000000000).toString(16), // Only required to send ether to the recipient from the initiating external account.
             data: '0x7f7465737432000000000000000000000000000000000000000000000000000000600057', // Optional, but used for defining smart contract creation and interaction.
             chainId: 3 // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
           }
